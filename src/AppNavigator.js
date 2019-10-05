@@ -8,13 +8,20 @@ import Configuration from './screens/Configuration';
 import Verification from './screens/Verification';
 
 
-const AppNavigator = createStackNavigator({
-  Home: { screen: Home },
-  About: { screen: About },
-  Login: { screen: Login },
-  Configuration: { screen: Configuration },
-  Verification: { screen: Verification },
-  // More routes
-});
+const AppNavigator = createStackNavigator(
+  {
+    Home: { screen: Home },
+    About: { screen: About },
+    Login: {
+      screen: Login,
+    },
+    Configuration: { screen: Configuration },
+    Verification: { screen: Verification },
+    // More routes
+  },
+  {
+    initialRouteName: 'Home',
+  },
+);
 
 export default createAppContainer(AppNavigator);
