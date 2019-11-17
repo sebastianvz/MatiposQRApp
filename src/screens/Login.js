@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Button, TextInput, View, StyleSheet, Image, Text, AsyncStorage,
+  Button, TextInput, View, StyleSheet, Image, Text,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -50,6 +52,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
+      showAlert: false,
     };
     this.goToAnotherPage = this.goToAnotherPage.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -58,7 +61,9 @@ class Login extends Component {
   handleLogin = async () => {
     const { username, password } = this.state;
     try {
-      const value = await AsyncStorage.getItem('MatiposQRappUrlEndpoint');
+      // const value = await AsyncStorage.getItem('MatiposQRappUrlEndpoint');
+      const value = await AsyncStorage.setItem('MatiposQRappUrlEndpoint', '');
+      console.log(value);
       if (value !== null) {
         // We have data!!
         axios.get(value, {
@@ -76,6 +81,8 @@ class Login extends Component {
         }).catch((error) => {
           console.log(error);
         });
+      } else {
+        this.setState({ showAlert: true });
       }
     } catch (error) {
       // Error retrieving data
@@ -88,7 +95,7 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, showAlert } = this.state;
     return (
       <View style={ styles.container }>
         <Image style={ styles.image } source={ logo } />
@@ -119,6 +126,21 @@ class Login extends Component {
           />
           <Text style={ { padding: 10 } }> ──────── </Text>
         </View>
+        <AwesomeAlert
+          show={ showAlert }
+          showProgress={ false }
+          title="AwesomeAlert"
+          message="I have a message for you!"
+          closeOnTouchOutside={ false }
+          closeOnHardwareBackPress={ false }
+          showCancelButton={ false }
+          showConfirmButton
+          confirmText="Yes, delete it"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={ () => {
+            this.setState({ showAlert: false });
+          } }
+        />
       </View>
     );
   }

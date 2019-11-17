@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   Button, TextInput, View, StyleSheet, Text, AsyncStorage,
 } from 'react-native';
@@ -20,44 +20,74 @@ const styles = StyleSheet.create({
   },
 });
 
-class Verification extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: '',
-    };
-    this.handleUrl = this.handleCode.bind(this);
-  }
+const Verification = () => {
+  const [code, setCode] = useState('');
 
-  handleCode = async () => {
-    const { code } = this.state;
+  const handleCode = async () => {
     try {
       const url = await AsyncStorage.getItem('MatiposQRappUrlEndpoint');
       console.log(code, url);
     } catch (error) {
       // Error saving data
     }
-  }
+  };
 
-  render() {
-    const { code } = this.state;
-    return (
-      <View style={ styles.container }>
-        <Text>Code</Text>
-        <TextInput
-          placeholder="Code"
-          style={ styles.input }
-          value={ code }
-          onChangeText={ (urlTyped) => this.setState({ code: urlTyped }) }
-        />
-        <Button
-          title="Verify"
-          style={ styles.input }
-          onPress={ () => { this.handleCode(); } }
-        />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={ styles.container }>
+      <Text>Code</Text>
+      <TextInput
+        placeholder="Code"
+        style={ styles.input }
+        value={ code }
+        onChangeText={ (urlTyped) => setCode(urlTyped) }
+      />
+      <Button
+        title="Verify"
+        style={ styles.input }
+        onPress={ handleCode }
+      />
+    </View>
+  );
+};
+
+// class Verification extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       code: '',
+//     };
+//     this.handleUrl = this.handleCode.bind(this);
+//   }
+
+//   handleCode = async () => {
+//     const { code } = this.state;
+//     try {
+//       const url = await AsyncStorage.getItem('MatiposQRappUrlEndpoint');
+//       console.log(code, url);
+//     } catch (error) {
+//       // Error saving data
+//     }
+//   }
+
+//   render() {
+//     const { code } = this.state;
+//     return (
+//       <View style={ styles.container }>
+//         <Text>Code</Text>
+//         <TextInput
+//           placeholder="Code"
+//           style={ styles.input }
+//           value={ code }
+//           onChangeText={ (urlTyped) => this.setState({ code: urlTyped }) }
+//         />
+//         <Button
+//           title="Verify"
+//           style={ styles.input }
+//           onPress={ () => { this.handleCode(); } }
+//         />
+//       </View>
+//     );
+//   }
+// }
 
 export default Verification;

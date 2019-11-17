@@ -6,6 +6,7 @@ import About from './screens/About';
 import Login from './screens/Login';
 import Configuration from './screens/Configuration';
 import Verification from './screens/Verification';
+import Camera from './screens/Camera';
 
 
 const AppNavigator = createStackNavigator(
@@ -17,10 +18,11 @@ const AppNavigator = createStackNavigator(
     },
     Configuration: { screen: Configuration },
     Verification: { screen: Verification },
+    Camera: { screen: Camera },
     // More routes
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Camera',
   },
 );
 
