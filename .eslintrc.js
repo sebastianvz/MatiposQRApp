@@ -13,6 +13,7 @@ module.exports = {
     shallow: true,
     it: true,
   },
+  parser: "babel-eslint",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
